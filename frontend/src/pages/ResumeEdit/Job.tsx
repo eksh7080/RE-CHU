@@ -14,7 +14,7 @@ type WorkFormState = {
 };
 
 const Job = ({ setAddJobElement, addJobElement, onCareerCreated }: WorkFormState) => {
-    const [isStilWork, setIsStilWork] = useState<boolean>(true);
+    const [isStilWork, setIsStilWork] = useState(true);
 
     const [workFormDataState, setWorkFormDataState] = useState<WorkFormData>({
         company: '',

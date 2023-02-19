@@ -54,7 +54,7 @@ export interface CareerData {
     company: string;
     position: string;
     notDevlop: boolean;
-    workNow: boolean;
+    workNow: boolean | number;
     startDate: string;
     endDate: string;
     reward: string;
@@ -68,4 +68,12 @@ export interface ProjectData {
     link1: string;
     link2: string;
     skills: string[];
+}
+
+export interface CarrerUpdate {
+    startDate: string;
+    endDate: string;
+    company: string;
+    position: string;
+    reward: string;
 }
