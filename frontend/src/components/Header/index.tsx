@@ -86,11 +86,12 @@ const Header = () => {
                     <img src={Logo} alt="logo" />
                 </h1>
 
-                <div className="mobileMenu">
-                    <article
-                        className={`${menuBarToggle ? 'toggleMenu active' : 'toggleMenu'}`}
-                        onClick={changeToggleMenu}
-                    >
+                <div
+                    className="mobileMenu"
+                    onClick={changeToggleMenu}
+                    onMouseLeave={(): void => setMenuBarToggle(false)}
+                >
+                    <article className={`${menuBarToggle ? 'toggleMenu active' : 'toggleMenu'}`}>
                         <span className="line"></span>
                         <span className="line"></span>
                         <span className="line"></span>

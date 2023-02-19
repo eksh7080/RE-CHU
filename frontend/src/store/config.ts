@@ -5,9 +5,10 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import userSlice from 'store/slices/userSlice';
 import authSlice from 'store/slices/authSlice';
 import formSlice from 'store/slices/formSlice';
-import chatSlice from './slices/chatSlice';
 import chatRoomSlice from './slices/chatRoomSlice';
-
+import chatSlice from './slices/chatSlice';
+import { setupListeners } from '@reduxjs/toolkit/dist/query';
+import { profileApi } from './apis/profileApi';
 // redux-persist
 const persistConfig = {
     key: 'root',
@@ -22,6 +23,7 @@ const combinedReducer = combineReducers({
     formState: formSlice.reducer,
     chatState: chatSlice.reducer,
     chatRoomState: chatRoomSlice.reducer,
+    [profileApi.reducerPath]: profileApi.reducer,
 });
 
 const rootReducer = persistReducer(persistConfig, combinedReducer);
@@ -43,7 +45,7 @@ const store = configureStore({
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware({
             serializableCheck: false,
-        }),
+        }).concat(profileApi.middleware),
 
     //리덕스 스토어의 초기값 설정.
     preloadedState: initialState,
@@ -52,7 +54,7 @@ const store = configureStore({
     // 콜백 함수로 설정하면 미들웨어 적용 순서를 정의 가능.
     enhancers: defaultEnhancers => [...defaultEnhancers],
 });
-
+setupListeners(store.dispatch);
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
@@ -62,3 +64,5 @@ export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const persistor = persistStore(store);
 
 export default store;
+
+export { useGetProfileQuery } from './apis/profileApi';

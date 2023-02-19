@@ -16,22 +16,42 @@ import Header from 'components/Header';
 import { useParams } from 'react-router-dom';
 import Job from './Job';
 import Project from './Project';
-import { UserData, ResumeData, FormStore, CareerData, ProjectData } from 'models/resumeEdit-model';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from 'store/config';
+import {
+    UserData,
+    ResumeData,
+    FormStore,
+    CareerData,
+    ProjectData,
+    CarrerUpdate,
+} from 'models/resumeEdit-model';
+import { useAppDispatch, useAppSelector } from 'store/config';
+import {
+    changeWorkFormToggle,
+    changeProjectFormToggle,
+    changeUpdateFormToggle,
+} from 'store/slices/formSlice';
 import API from 'utils/api';
+import { DatePicker } from 'antd';
 
 const Resume = () => {
-    const [isWorkFormToggle, setIsWorkFormToggle] = useState<boolean>(false);
-    const [isprojectFormToggle, setIsProjectFormToggle] = useState<boolean>(false);
     const [userInfo, setUserInfo] = useState<UserData>({} as UserData);
     const [resumeTitle, setResumeTitle] = useState<ResumeData>({} as ResumeData);
     const [addJobElement, setAddJobElement] = useState<FormStore[]>([]);
     const [addProjectElement, setAddProjectElement] = useState<FormStore[]>([]);
     const [createCareerData, setCreateCareerData] = useState<CareerData[]>([]);
     const [createProjectData, setCreateProjectData] = useState<ProjectData[]>([]);
+    const [updateCarrerValue, setUpdateCarrerValue] = useState<CarrerUpdate>({
+        startDate: '',
+        endDate: '',
+        company: '',
+        position: '',
+        reward: '',
+    });
 
-    // const componentToggle = useSelector<RootState>(state => state.workFormToggle);
+    const workFormToggle = useAppSelector(state => state.formState.workFormToggle);
+    const projectFormToggle = useAppSelector(state => state.formState.projectFormToggle);
+    const updateFormToggle = useAppSelector(state => state.formState.updateFormToggle);
+    const dispatch = useAppDispatch();
 
     const params = useParams();
     const resumeIds = params.id;
@@ -89,27 +109,25 @@ const Resume = () => {
 
     const resumeNameChange = async () => {
         try {
-            const res = await axios.patch(`${API.BASE_URL}/my-portfolio/resumes/${resumeIds}`, {
+            await axios.patch(`${API.BASE_URL}/my-portfolio/resumes/${resumeIds}`, {
                 name: resumeTitle.title,
             });
-
-            console.log(res);
         } catch (err: unknown) {
             console.log(err);
         }
     };
 
-    const addJobComponents = () => {
-        const newJob = [...addJobElement, { list: addJobElement.length, state: false }];
-        setAddJobElement(newJob);
-        setIsWorkFormToggle(true);
-    };
+    // const addJobComponents = () => {
+    //     const newJob = [...addJobElement, { list: addJobElement.length, state: false }];
+    //     setAddJobElement(newJob);
+    //     dispatch(toggle(true));
+    // };
 
-    const addProjectComponents = () => {
-        const newProject = [...addProjectElement, { list: addProjectElement.length, state: false }];
-        setAddProjectElement(newProject);
-        setIsProjectFormToggle(true);
-    };
+    // const addProjectComponents = () => {
+    //     const newProject = [...addProjectElement, { list: addProjectElement.length, state: false }];
+    //     setAddProjectElement(newProject);
+    //     dispatch(toggle(true));
+    // };
 
     const deleteJobComponent = async (carrerId: number) => {
         await axios.delete(`${API.BASE_URL}/my-portfolio/careers/${carrerId}`);
@@ -121,6 +139,49 @@ const Resume = () => {
         await axios.delete(`${API.BASE_URL}/my-portfolio/projects/${projectId}`);
         const flteredId = createProjectData.filter(e => e.projectId !== projectId);
         setCreateProjectData(flteredId);
+    };
+
+    const updateCarrerFormHandler = (
+        e: React.ChangeEvent<HTMLTextAreaElement> | React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        const target = e.target;
+        // const checked = isStilWork ? false : true;
+
+        setUpdateCarrerValue({
+            ...updateCarrerValue,
+            [target.name]: target.value,
+        });
+    };
+
+    const updateStartTimeHandler = (date: any, dateString: string) => {
+        setUpdateCarrerValue({
+            ...updateCarrerValue,
+            startDate: dateString,
+        });
+    };
+
+    const updateEndTimeHandler = (date: any, dateString: string) => {
+        setUpdateCarrerValue({
+            ...updateCarrerValue,
+            endDate: dateString,
+        });
+    };
+
+    const updateFormComponent = async (carrerId: number, evt: React.FormEvent<HTMLFormElement>) => {
+        evt.preventDefault();
+        try {
+            const res = await axios.patch(`${API.BASE_URL}/my-portfolio/careers/${carrerId}`, {
+                startDate: updateCarrerValue.startDate,
+                endDate: updateCarrerValue.endDate,
+                position: updateCarrerValue.position,
+                company: updateCarrerValue.company,
+                reward: updateCarrerValue.reward,
+            });
+            dispatch(changeUpdateFormToggle(!updateFormToggle));
+            console.log(res, '123123');
+        } catch (err: unknown) {
+            console.log(err);
+        }
     };
 
     return (
@@ -208,56 +269,183 @@ const Resume = () => {
                                     <FormTitle>
                                         <label>업무경험</label>
                                         <span
-                                            onClick={() => setIsWorkFormToggle(!isWorkFormToggle)}
+                                            onClick={() =>
+                                                dispatch(changeWorkFormToggle(!workFormToggle))
+                                            }
                                         >
-                                            <BiPlus className={isWorkFormToggle ? 'rotate' : ''} />
+                                            <BiPlus className={workFormToggle ? 'rotate' : ''} />
                                         </span>
                                     </FormTitle>
 
                                     {createCareerData.map((tem: CareerData, idx: number) => {
+                                        console.log(typeof tem.workNow, 'work now');
                                         return (
                                             <ExistForm key={idx}>
-                                                <div>
-                                                    <h1>업무경험 {tem.careerId}</h1>
+                                                {updateFormToggle ? (
+                                                    <form
+                                                        onSubmit={evt =>
+                                                            updateFormComponent(tem.careerId, evt)
+                                                        }
+                                                    >
+                                                        <div className="updatingForm">
+                                                            <h1>
+                                                                업무경험 {tem.careerId} 수정중...
+                                                            </h1>
 
-                                                    <ul className="customBtn">
-                                                        <li>
-                                                            <button
-                                                                type="button"
-                                                                onClick={() =>
-                                                                    deleteJobComponent(tem.careerId)
-                                                                }
-                                                            >
-                                                                삭제
-                                                            </button>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div className="careerContent">
-                                                    <ul>
-                                                        <li>
-                                                            {`${tem.startDate}~${
-                                                                tem.workNow ? tem.endDate : '재직중'
-                                                            }`}
-                                                        </li>
-                                                    </ul>
+                                                            <ul className="customBtn">
+                                                                <li>
+                                                                    <button type="submit">
+                                                                        수정 내용 저장
+                                                                    </button>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
 
-                                                    <ul>
-                                                        <li>
-                                                            <strong>{tem.company}</strong>
-                                                        </li>
-                                                        <li>{tem.position}</li>
-                                                    </ul>
+                                                        <div className="careerContent">
+                                                            <ul>
+                                                                <li>
+                                                                    {tem.workNow === 0 ? (
+                                                                        <>
+                                                                            <DatePicker
+                                                                                placeholder={
+                                                                                    tem.startDate
+                                                                                }
+                                                                                picker="month"
+                                                                                name="startDate"
+                                                                                onChange={
+                                                                                    updateStartTimeHandler
+                                                                                }
+                                                                            />{' '}
+                                                                            ~ 재직중
+                                                                        </>
+                                                                    ) : (
+                                                                        <>
+                                                                            <DatePicker
+                                                                                placeholder={
+                                                                                    tem.startDate
+                                                                                }
+                                                                                picker="month"
+                                                                                name="startDate"
+                                                                                onChange={
+                                                                                    updateStartTimeHandler
+                                                                                }
+                                                                            />
+                                                                            <DatePicker
+                                                                                placeholder={
+                                                                                    tem.endDate
+                                                                                }
+                                                                                picker="month"
+                                                                                name="endDate"
+                                                                                onChange={
+                                                                                    updateEndTimeHandler
+                                                                                }
+                                                                            />
+                                                                        </>
+                                                                    )}
+                                                                </li>
+                                                            </ul>
 
-                                                    <dl>
-                                                        <dt>{tem.reward}</dt>
-                                                    </dl>
-                                                </div>
+                                                            <ul>
+                                                                <li>
+                                                                    <input
+                                                                        type="text"
+                                                                        defaultValue={tem.company}
+                                                                        onChange={
+                                                                            updateCarrerFormHandler
+                                                                        }
+                                                                        name="company"
+                                                                    />
+                                                                </li>
+                                                                <li>
+                                                                    <input
+                                                                        type="text"
+                                                                        defaultValue={tem.position}
+                                                                        onChange={
+                                                                            updateCarrerFormHandler
+                                                                        }
+                                                                        name="position"
+                                                                    />
+                                                                </li>
+                                                            </ul>
+
+                                                            <dl>
+                                                                <dt>
+                                                                    <textarea
+                                                                        maxLength={500}
+                                                                        defaultValue={tem.reward}
+                                                                        onChange={
+                                                                            updateCarrerFormHandler
+                                                                        }
+                                                                        name="reward"
+                                                                    ></textarea>
+                                                                </dt>
+                                                            </dl>
+                                                        </div>
+                                                    </form>
+                                                ) : (
+                                                    <>
+                                                        <div className="updateBefore">
+                                                            <h1>업무경험 {tem.careerId}</h1>
+
+                                                            <ul className="customBtn">
+                                                                <li>
+                                                                    <button
+                                                                        type="button"
+                                                                        onClick={() =>
+                                                                            dispatch(
+                                                                                changeUpdateFormToggle(
+                                                                                    !updateFormToggle,
+                                                                                ),
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        수정
+                                                                    </button>
+                                                                </li>
+                                                                <li>
+                                                                    <button
+                                                                        type="button"
+                                                                        onClick={() =>
+                                                                            deleteJobComponent(
+                                                                                tem.careerId,
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        삭제
+                                                                    </button>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+
+                                                        <div className="careerContent">
+                                                            <ul>
+                                                                <li>
+                                                                    {`${tem.startDate}~${
+                                                                        tem.workNow
+                                                                            ? tem.endDate
+                                                                            : '재직중'
+                                                                    }`}
+                                                                </li>
+                                                            </ul>
+
+                                                            <ul>
+                                                                <li>
+                                                                    <strong>{tem.company}</strong>
+                                                                </li>
+                                                                <li>{tem.position}</li>
+                                                            </ul>
+
+                                                            <dl>
+                                                                <dt>{tem.reward}</dt>
+                                                            </dl>
+                                                        </div>
+                                                    </>
+                                                )}
                                             </ExistForm>
                                         );
                                     })}
 
-                                    {isWorkFormToggle && (
+                                    {workFormToggle ? (
                                         <Job
                                             onCareerCreated={state => {
                                                 setCreateCareerData([
@@ -265,10 +453,11 @@ const Resume = () => {
                                                     ...state,
                                                 ]);
                                             }}
-                                            setIsWorkFormToggle={setIsWorkFormToggle}
                                             setAddJobElement={setAddJobElement}
                                             addJobElement={addJobElement}
                                         />
+                                    ) : (
+                                        ''
                                     )}
                                 </section>
 
@@ -277,12 +466,12 @@ const Resume = () => {
                                         <label>프로젝트</label>
                                         <span
                                             onClick={() =>
-                                                setIsProjectFormToggle(!isprojectFormToggle)
+                                                dispatch(
+                                                    changeProjectFormToggle(!projectFormToggle),
+                                                )
                                             }
                                         >
-                                            <BiPlus
-                                                className={isprojectFormToggle ? 'rotate' : ''}
-                                            />
+                                            <BiPlus className={projectFormToggle ? 'rotate' : ''} />
                                         </span>
                                     </FormTitle>
 
@@ -332,9 +521,9 @@ const Resume = () => {
                                             </ExistForm>
                                         );
                                     })}
-                                    {isprojectFormToggle && (
+                                    {projectFormToggle && (
                                         <Project
-                                            setIsProjectFormToggle={setIsProjectFormToggle}
+                                            // setIsProjectFormToggle={setIsProjectFormToggle}
                                             setAddProjectElement={setAddProjectElement}
                                             addProjectElement={addProjectElement}
                                             onProjectCreated={state => {

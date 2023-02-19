@@ -482,7 +482,7 @@ export const ExistForm = styled.section`
         font-weight: 600;
     }
 
-    & div:first-of-type {
+    & .updateBefore {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -500,10 +500,14 @@ export const ExistForm = styled.section`
                     font-weight: 400;
                     box-sizing: border-box;
                     border-radius: 0.4rem;
+                }
+            }
 
+            & li:first-of-type {
+                & button[type='button'] {
                     &:hover {
-                        opacity: 0.8;
                         cursor: pointer;
+                        color: blue;
                         font-weight: 900;
                     }
                 }
@@ -512,7 +516,45 @@ export const ExistForm = styled.section`
             & li:last-of-type {
                 & button[type='button']:last-of-type {
                     &:hover {
+                        cursor: pointer;
+                        font-weight: 900;
                         color: red;
+                    }
+                }
+            }
+        }
+    }
+
+    & .updatingForm {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .customBtn {
+            display: flex;
+
+            & li {
+                & button[type='submit'] {
+                    border: 0;
+                    background-color: transparent;
+                    padding: 0.4rem 1.3rem;
+                    font-size: 1.3rem;
+                    line-height: 2rem;
+                    font-weight: 400;
+                    box-sizing: border-box;
+                    border-radius: 0.4rem;
+
+                    &:hover {
+                        cursor: pointer;
+                        font-weight: 900;
+                    }
+                }
+            }
+
+            & li:last-of-type {
+                & button[type='submit'] {
+                    &:hover {
+                        color: blue;
                     }
                 }
             }
