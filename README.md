@@ -10,6 +10,8 @@
 
 ### 1.1.0 : 채팅 및 알람기능 + UI 개선 22.01.10
 
+### 1.1.1 : 이력서 수정 기능 + Redux-toolkit 상태값 적용 
+
 ## 1. 프로젝트 소개
 
 [프로젝트 소개 페이지 바로가기](https://glamorous-vase-fb5.notion.site/SW-3-d182bc1b7e5647c399b44b21c2b159d5)
@@ -137,77 +139,6 @@
 ![image](https://user-images.githubusercontent.com/102174146/211615176-08b34e77-9148-4af7-8b31-056f345b96c9.gif)
 
 </details>
-
-<br />
-
-## 4. 디렉토리 구조
-
-```bash
- |    .gitignore
- |    README.md
- |
- └ backend
- |   |   .env
- |   |   nodemon.json
- |   |   package.json
- |   |   tsconfig.json
- |   |
- |   └ src
- |       |    config
- |       |    db
- |       |    middlewares
- |       |    routes
- |       |    services
- |       |    index.ts
- |       └    server.ts
- |
- └ frontend
-     |   .env
-     |   package.json
-     |   tsconfig.json
-     |
-     └ src
-         |       App.tsx
-         |       index.tsx
-         |       Router.tsx
-         |       package.json
-         |       tsconfig.json
-         |
-         └ assets/images
-         └ components
-         |       Admin
-         |       Layout
-         |       Resume
-         |       User
-         |
-         └ store
-         |     |
-         |     |  config.ts
-         |     └  slices
-         |            authSlice.ts
-         |            chatRoomSlice.ts
-         |            chatSlice.ts
-         |            formSlice.ts
-         |            userSlice.ts
-         |
-         └ models
-         |       resume-model.tsx
-         |       resumeEdit-model.tsx
-         └ pages
-         |       Admin
-         |       Comunity
-         |       ...
-         |       ResumeEdit
-         |       ResumeList
-         |
-         └ styles
-         |       GlobalStyle.tsx
-         |       theme.tsx
-         |       theme.d.tsx
-         └ utils
-                 api.ts
-                 format.ts
-```
 
 <br />
 
