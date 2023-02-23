@@ -30,13 +30,12 @@
 
 </br>
 
-#### 관리자 계정 테스트
+#### 계정 테스트
 
 | Type   | Email                | 비밀번호    |
 | ------ | -------------------- | ----------- |
-| 일반   | test-user1@rechu.com | testaccount |
-| 일반   | test-user2@rechu.com | testaccount |
-| 관리자 | admin@admin.com      | testaccount |
+| 일반   | eksh1235@nate.com | 123123 |
+| 관리자 | admin@admin.com      | 123123 |
 
 <br />
 
@@ -61,28 +60,6 @@
 ### 2-2 Frontend
 
 <img src="https://user-images.githubusercontent.com/102174146/210304650-3c59236d-1d0e-4cd6-a66b-1bacdae01544.png" width="640" />
-
-### 2-3 Infra Structure
-
-<img src="https://user-images.githubusercontent.com/102174146/210772522-a4525b0e-751a-4935-8dfa-b7740f4ffd1a.png" width="640">
-<br>
-
-| 포지션   | 스택                             |
-| -------- | -------------------------------- |
-| language | TypeScript                       |
-| FE       | React, Redux                     |
-| BE       | Node, TypeScript, Express, mySQL |
-| Deploy   | PM2, NGINX                       |
-
-
-<br>
-
-| 포지션   | 스택                             |
-| -------- | -------------------------------- |
-| language | TypeScript                       |
-| FE       | React, Redux                     |
-| BE       | Node, TypeScript, Express, mySQL |
-| Deploy   | PM2, NGINX                       |
 
 <br>
 
@@ -142,7 +119,7 @@
 
 <br />
 
-## 5. 제작자
+## 4. 팀원 소개
 
 | 이름         | 포지션 | 담당 업무                                                                                                                                                                                                    |
 | ------------ | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
