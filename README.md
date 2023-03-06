@@ -52,24 +52,6 @@
 ### 2-3 Infra Structure
 
 <img src="https://user-images.githubusercontent.com/102174146/210772522-a4525b0e-751a-4935-8dfa-b7740f4ffd1a.png" width="640">
-<br>
-
-| 포지션   | 스택                             |
-| -------- | -------------------------------- |
-| language | TypeScript                       |
-| FE       | React, Redux                     |
-| BE       | Node, TypeScript, Express, mySQL |
-| Deploy   | PM2, NGINX                       |
-
-### BE
-
-<img src="https://user-images.githubusercontent.com/102174146/210304653-97f6eaac-d017-4e13-ba2f-3b46632c134b.png" width="640" />
-
-### FE
-
-<img src="https://user-images.githubusercontent.com/102174146/210304650-3c59236d-1d0e-4cd6-a66b-1bacdae01544.png" width="640" />
-
-
 
 <br>
 
