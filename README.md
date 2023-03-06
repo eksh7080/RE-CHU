@@ -39,12 +39,6 @@
 
 <br>
 
-### 1-3. 와이어프레임
-
-### https://
-
-<br>
-
 ## 2. 기술 스택
 
 ### 2-1 Backend
@@ -122,72 +116,7 @@
 
 <br />
 
-## 4. 디렉토리 구조
-
-```bash
- |    .gitignore
- |    README.md
- |
- └ backend
- |   |   .env
- |   |   nodemon.json
- |   |   package.json
- |   |   tsconfig.json
- |   |
- |   └ src
- |       |    config
- |       |    db
- |       |    middlewares
- |       |    routes
- |       |    services
- |       |    index.ts
- |       └    server.ts
- |
- └ frontend
-     |   .env
-     |   package.json
-     |   tsconfig.json
-     |
-     └ src
-         |       App.tsx
-         |       index.tsx
-         |       Router.tsx
-         |       package.json
-         |       tsconfig.json
-         |
-         └ assets/images
-         └ components
-         |       Admin
-         |       Layout
-         |       Resume
-         |       User
-         |
-         └ context
-         |       FormSlice.tsx
-         |       store.tsx
-         |
-         └ models
-         |       resume-model.tsx
-         |       resumeEdit-model.tsx
-         └ pages
-         |       Admin
-         |       Comunity
-         |       ...
-         |       ResumeEdit
-         |       ResumeList
-         |
-         └ styles
-         |       GlobalStyle.tsx
-         |       theme.tsx
-         |       theme.d.tsx
-         └ utils
-                 api.ts
-                 format.ts
-```
-
-<br />
-
-## 5. 제작자
+## 4. 제작자
 
 | 이름         | 포지션 | 담당 업무                                                                                                                                |
 | ------------ | ------ | ---------------------------------------------------------------------------------------------------------------------------------------- |

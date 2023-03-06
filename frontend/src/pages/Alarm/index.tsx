@@ -129,7 +129,6 @@ const Alaram = () => {
 
     const fetchAlarmData = async () => {
         const res = await API.get('/alarm');
-        console.log(res);
         setAlarmData(res.alarmData);
         setMatchAlarmData(res.matchRequests);
     };
