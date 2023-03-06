@@ -69,14 +69,7 @@
 
 <img src="https://user-images.githubusercontent.com/102174146/210304650-3c59236d-1d0e-4cd6-a66b-1bacdae01544.png" width="640" />
 
-<br>
 
-| 포지션   | 스택                             |
-| -------- | -------------------------------- |
-| language | TypeScript                       |
-| FE       | React, Redux                     |
-| BE       | Node, TypeScript, Express, mySQL |
-| Deploy   | PM2, NGINX                       |
 
 <br>
 
@@ -103,16 +96,7 @@
 ![image](https://user-images.githubusercontent.com/102174146/210304984-0dffa937-3052-42ce-891d-c92535545549.png)
 
 </details>
-<details><summary>사진 2개 이상</summary>
 
-|                    |
-| :----------------: |
-| ![image](https://) |
-|     홈페이지 ⓵     |
-| ![image](https://) |
-|     홈페이지 ⓶     |
-
-</details>
 
 <br />
 
